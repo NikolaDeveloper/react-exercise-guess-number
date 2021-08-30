@@ -8,11 +8,12 @@ const Start = ({ data, setData }) => {
         if(data.tries >= 3)
             return;
 
-        tries = data.tries + 1;
         let tile = e.target;
         if(tile.className.indexOf('picked') !== -1)
             return;
-            
+        
+        tries = data.tries + 1;
+
         let rnd = Math.floor(Math.random() * (numbers.length - 1));
         tile.innerHTML = numbers[rnd];
 
@@ -22,11 +23,12 @@ const Start = ({ data, setData }) => {
             setTimeout(() => {
                 alert(`Congrats! You found your number in ${tries} ${try_label}.`);
                 reset();
-            }, 100)
+            }, 10)
             return;
         }
+
         numbers.splice(rnd, 1);
-        console.log(numbers[rnd], rnd, numbers, numbers.length);
+        //console.log(numbers[rnd], rnd, numbers, numbers.length);
 
         tile.className += " wrong picked";
         setData({...data, tries: tries});
@@ -34,7 +36,7 @@ const Start = ({ data, setData }) => {
             setTimeout(() => {
                 alert('You failed :(');
                 reset();
-            }, 100)
+            }, 10)
         }
     }
     const reset = () => {
@@ -42,11 +44,11 @@ const Start = ({ data, setData }) => {
         setData({...data, number: '', tries: 0, gameState: 'menu'})
     }
 
-    const try_lable = 3 - tries === 1 ? 'try' : 'tries'
+    const try_label = 3 - tries === 1 ? 'try' : 'tries'
     return (
         <div className="game-screen game-start">
             <p>
-                Find your number ;) You've got {3 - tries} {try_lable} left.
+                Find your number ;) You've got {3 - tries} {try_label} left.
             </p>
             <div className="tiles">
             {Array.from(Array(9).keys()).map((i) => {
